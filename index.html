@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>	</title>
+	<style type="text/css">
+		.sphere {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			border-radius: 100px;
+			transition: all 0.5s ease-out;
+			top: -100px;
+			background-image: url(balle.png);
+			background-size: 100% 100%
+		}
+		.ground {
+			position: absolute;
+			width: 100%;
+			height: 100vh;
+			bottom: 0;
+			left: 0;	
+			background-image: url(graund.png);	
+			background-size: cover
+		}
+	</style>
+</head>
+<body>
+	<h1>Очки: <span class="score">0</span></h1>
+	<h2>Набери больше: 10 мячей</h2>
+<div class="ground">
+	
+</div>
+
+<script type="text/javascript">
+	let score_elem = document.querySelector(".score");
+
+
+	function randomizer(arg){
+		let x = Math.random() * arg;
+		let y = Math.round(x);
+		return y;
+	}
+	for(let i=0; i<15; i++){
+		let circle = document.createElement("div");
+		document.body.appendChild(circle);
+		circle.classList.add("sphere")
+		circle.style.left = randomizer(1600) + "px";
+	}
+
+	function start(){
+		setInterval(move,100);
+		setTimeout(finish, 20000);
+		setInterval(clear, 1500);
+	}
+	setTimeout(start, 2000);
+	let circles = document.querySelectorAll(".sphere")
+	let index = 0;
+	let y = 0;
+	let score = 0;
+
+	function clear(){
+		for(let i=0; i<circles.length; i++){
+			if(circles[i].style.top == "800px"){
+				circles[i].style.display = "none";
+			}
+		}
+	}
+	function move(){
+		y = y + 50;
+		circles[index].style.top = y + "px";
+		if(y >=800){ 
+			index++;
+			y = 0;
+		}
+	}
+	function finish(){
+		if(score >= 10){
+			alert("YOU WINNER")
+		}else{
+			alert("YOU LOSE")
+		}
+	}
+	for(let i=0; i<circles.length; i++){
+		circles[i].onclick = function(){
+			circles[i].style.display = "none"
+			score++;
+			score_elem.innerHTML = score;
+		}
+	}
+
+
+</script>
+</body>
+</html>
